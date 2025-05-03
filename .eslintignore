@@ -1,0 +1,7 @@
+**.config.js
+**.config.ts
+dist/*
+**/*.config.js
+**/*.config.ts
+dist/*
+test/*
