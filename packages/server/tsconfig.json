@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ES2020",
+    "module": "CommonJS",
     "moduleResolution": "node",
-    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -15,12 +14,7 @@
       "node",
       "express",
       "cors"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    ]
   },
   "include": [
     "src/**/*.ts",

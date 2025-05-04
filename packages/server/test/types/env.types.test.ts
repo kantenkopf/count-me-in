@@ -1,4 +1,4 @@
-import { isValidEnvMode } from '@/types/env.types';
+import { isValidEnvMode } from 'src/types/env.types';
 
 describe('isValidEnvMode', () => {
   it('should return true for valid environment modes', () => {

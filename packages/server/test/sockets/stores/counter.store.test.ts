@@ -1,9 +1,9 @@
 import {
-  getCounter,
-  getCounterHistoy,
   resetCounterState,
+  getCounter,
   setCounter,
-} from '@/sockets/stores/counter.store';
+  getCounterHistoy,
+} from 'src/sockets/stores/counter.store';
 
 describe('Counter Store', () => {
   beforeEach(() => {

@@ -3,7 +3,7 @@ import {
   getCounter,
   getCounterHistoy,
   setCounter,
-} from '../stores/counter.store';
+} from '../stores/counter.store.js';
 
 export const initCounterNamespace = (io: Server): Namespace => {
   const counterNamespace = io.of('/counter');

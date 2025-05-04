@@ -1,4 +1,4 @@
-import { getEnvArgs } from '@/helpers/argv.helper';
+import { getEnvArgs } from 'src/helpers/argv.helper';
 
 describe('getEnvArgs', () => {
   it('should return default values when no arguments are provided', () => {

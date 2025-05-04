@@ -1,4 +1,4 @@
-import { EnvArgs, isValidEnvMode } from '@/types/env.types';
+import { EnvArgs, isValidEnvMode } from 'src/types/env.types';
 
 const isLocalhost = (url: string): boolean => {
   const pattern = /^https?:\/\/localhost(:\d+)?(\/.*)?$/;
