@@ -37,9 +37,14 @@ if (NODE_ENV === 'dev') {
   app.use(e.static(clientDistPath));
 
   app.get(/.*/, (_: Request, res: Response) => {
-    res.sendFile(path.join(clientDistPath, 'index.html'), (error) => {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
+    const filePath = path.join(clientDistPath, 'index.html');
+    res.sendFile(filePath, (error) => {
+      if (error && !res.headersSent) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      } else if (error) {
+        console.error('Error after headers were sent:', error);
+      }
     });
   });
 }
