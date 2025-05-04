@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { getEnvArgs } from './helpers/argv.helper';
 import { createServer } from 'http';
 import { Server, ServerOptions } from 'socket.io';
+import { initCounterNamespace } from './sockets/namespaces/counter.namespace';
 
 const { PORT, NODE_ENV, CLIENT_URL } = getEnvArgs(argv);
 
@@ -47,9 +48,7 @@ if (NODE_ENV === 'dev') {
   });
 }
 
-io.on('connection', () => {
-  console.log('Connection established.');
-});
+initCounterNamespace(io);
 
 const server = httpServer.listen(PORT, () => {
   console.log(
