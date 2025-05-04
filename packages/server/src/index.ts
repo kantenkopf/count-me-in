@@ -4,13 +4,27 @@ import path from 'path';
 import { argv } from 'process';
 import { fileURLToPath } from 'url';
 import { getEnvArgs } from './helpers/argv.helper';
+import { createServer } from 'http';
+import { Server, ServerOptions } from 'socket.io';
 
 const { PORT, NODE_ENV, CLIENT_URL } = getEnvArgs(argv);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
+
+const socketIoServerOptions: Partial<ServerOptions> = {
+  cors:
+    NODE_ENV === 'dev'
+      ? {
+          origin: CLIENT_URL,
+          methods: ['GET'],
+        }
+      : undefined,
+};
 
 const app: Application = e();
+const httpServer = createServer(app);
+const io = new Server(httpServer, socketIoServerOptions);
 
 if (NODE_ENV === 'dev') {
   app.use(
@@ -22,7 +36,7 @@ if (NODE_ENV === 'dev') {
 
   console.log('Not serving static content in development mode.');
 } else if (NODE_ENV === 'prod') {
-  const clientDistPath = path.resolve(__dirname, '../../client/dist');
+  const clientDistPath = path.resolve(_dirname, '../../client/dist');
   app.use(e.static(clientDistPath));
 
   app.get(/.*/, (_: Request, res: Response) => {
@@ -33,7 +47,11 @@ if (NODE_ENV === 'dev') {
   });
 }
 
-const server = app.listen(PORT, () => {
+io.on('connection', () => {
+  console.log('Connection established.');
+});
+
+const server = httpServer.listen(PORT, () => {
   console.log(
     `Server is running on http://localhost:${PORT}; Mode: ${NODE_ENV}`
   );
