@@ -1,10 +1,10 @@
 import { mount } from "@vue/test-utils";
 import HomeView from "@/views/HomeView.vue";
 
-describe("HomeView renders normally", () => {
+describe("When HomeView.vue is rendered", () => {
   const wrapper = mount(HomeView);
 
-  it("renders HomeView", () => {
+  it("renders correctly", () => {
     expect(wrapper.exists()).toBe(true);
   });
 
