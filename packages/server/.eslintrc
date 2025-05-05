@@ -16,7 +16,7 @@
   "ignorePatterns": [
     "dist/",
     "*.config.*",
-    "test/**/*.spec.ts",
+    "test/**/*.test.ts",
     "**/__tests__/**/*.ts"
   ],
   "overrides": [

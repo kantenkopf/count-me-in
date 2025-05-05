@@ -1,7 +1,7 @@
 import e, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
-import { getEnvArgs } from './helpers/argv.helper.js';
+import { getEnvArgs } from './helpers/env.helper.js';
 import { createServer } from 'http';
 import { Server, ServerOptions } from 'socket.io';
 import { initCounterNamespace } from './sockets/namespaces/counter.namespace.js';

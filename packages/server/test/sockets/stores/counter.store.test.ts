@@ -5,16 +5,16 @@ import {
   getCounterHistoy,
 } from 'src/sockets/stores/counter.store';
 
-describe('Counter Store', () => {
+describe('When counter store is invoked', () => {
   beforeEach(() => {
     resetCounterState();
   });
 
-  test('should initialize counter to 0', () => {
+  it('should initialize counter to 0', () => {
     expect(getCounter()).toBe(0);
   });
 
-  test('should increment the counter', () => {
+  it('should increment the counter when setCounter is called', () => {
     setCounter();
     expect(getCounter()).toBe(1);
 
@@ -22,7 +22,7 @@ describe('Counter Store', () => {
     expect(getCounter()).toBe(2);
   });
 
-  test('should update counter history', () => {
+  it('should update counter history when the currentCounter is incremented', () => {
     setCounter();
     setCounter();
     setCounter();
@@ -30,7 +30,7 @@ describe('Counter Store', () => {
     expect(getCounterHistoy()).toEqual([1, 2, 3]);
   });
 
-  test('should not exceed max history length', () => {
+  it('counterHistory should not exceed the max history limit', () => {
     for (let i = 0; i < 7; i++) {
       setCounter();
     }
@@ -38,7 +38,7 @@ describe('Counter Store', () => {
     expect(getCounterHistoy()).toEqual([3, 4, 5, 6, 7]);
   });
 
-  test('should correctly handle history when counter is reset', () => {
+  it('should correctly handle history when counter is reset', () => {
     setCounter();
     setCounter();
     expect(getCounterHistoy()).toEqual([1, 2]);

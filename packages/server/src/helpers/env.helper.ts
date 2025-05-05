@@ -27,14 +27,17 @@ export const getEnvArgs = (): EnvArgs => {
       } else {
         envArgs.NODE_ENV = NODE_ENV;
       }
+    } else {
+      throw new Error('Invalid mode for server. Only dev and prod are supported.')
     }
   }
 
   if (CLIENT_URL !== null && CLIENT_URL !== undefined) {
-    if (envArgs.NODE_ENV === 'dev' && isLocalhost(CLIENT_URL)) {
-      envArgs.CLIENT_URL = CLIENT_URL;
+    if (envArgs.NODE_ENV === 'dev') {
+      if (isLocalhost(CLIENT_URL)) envArgs.CLIENT_URL = CLIENT_URL;
+      else throw new Error('CLIENT_URL is restricted to localhost.')
     } else {
-      throw new Error('CLIENT_URL is restricted to localhost in dev mode.')
+      console.log('CLIENT_URL is restricted to dev mode. Skipping env parameter.')
     }
   }
   
