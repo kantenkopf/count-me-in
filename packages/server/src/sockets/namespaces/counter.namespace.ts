@@ -1,9 +1,6 @@
 import { Namespace, Server } from 'socket.io';
-import {
-  getCounter,
-  getCounterHistoy,
-  setCounter,
-} from '../stores/counter.store.js';
+import { getCounter, setCounter, getCounterHistoy } from '@/sockets/stores/counter.store';
+
 
 export const initCounterNamespace = (io: Server): Namespace => {
   const counterNamespace = io.of('/counter');
