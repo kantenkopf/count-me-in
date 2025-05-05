@@ -74,9 +74,24 @@ describe("When HomeView mounts", () => {
   });
 
   it("updates the counter when 'counter:update' event is received", async () => {
-    const wrapper = mount(HomeView);
+    const wrapper = mount(HomeView, {
+      data() {
+        return {
+          isError: false,
+          isLoading: false,
+          counter: null,
+        };
+      },
+      global: {
+        stubs: {
+          CounterDisplay: {
+            template: '<div data-test="counter">{{ counter }}</div>',
+            props: ["counter"],
+          },
+        },
+      },
+    });
 
-    // Simulate the "counter:update" event
     const updateCallback = mockSocket.on.mock.calls.find(
       (call: string[]) => call[0] === "counter:update"
     )[1];
@@ -84,22 +99,34 @@ describe("When HomeView mounts", () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.find('[data-test="counter"]').text()).toBe("42");
+    const counterElement = wrapper.find('[data-test="counter"]');
+    expect(counterElement.exists()).toBe(true);
+    expect(counterElement.text()).toBe("42");
   });
 
   it("emits 'counter:increment' when the button is clicked", async () => {
     const wrapper = mount(HomeView);
 
+    const connectCallback = mockSocket.on.mock.calls.find(
+      (call: string[]) => call[0] === "connect"
+    )[1];
+    connectCallback();
+
+    await wrapper.vm.$nextTick();
+
     const button = wrapper.find('[data-test="counter-button"]');
+    expect(button.exists()).toBe(true);
+
+    expect(button.attributes("disabled")).toBeUndefined();
+
     await button.trigger("click");
 
     expect(mockSocket.emit).toHaveBeenCalledWith("counter:increment");
   });
 
-  it("disconnects the socket on unmount", () => {
+  it("disconnects from socket when unmounted", () => {
     const wrapper = mount(HomeView);
     wrapper.unmount();
-
     expect(mockSocket.disconnect).toHaveBeenCalled();
   });
 });

@@ -50,12 +50,12 @@ if (NODE_ENV === 'dev') {
 
 initCounterNamespace(io);
 
-const server = httpServer.listen(PORT, () => {
-  console.log(
-    `Server is running on http://localhost:${PORT}; Mode: ${NODE_ENV}`
-  );
-});
+if (process.env.TEST !== 'enabled') {
+  httpServer.listen(PORT, () => {
+    console.log(
+      `Server is running on http://localhost:${PORT}; Mode: ${NODE_ENV}`
+    );
+  });
+}
 
 export default app;
-
-export { server };
