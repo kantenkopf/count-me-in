@@ -99,7 +99,7 @@ button:hover:not(:disabled):not(:active) {
   border-color: var(--hover-border-color);
 }
 
-button:active {
+button:active:not(:disabled) {
   background-color: var(--alt-color);
 }
 
