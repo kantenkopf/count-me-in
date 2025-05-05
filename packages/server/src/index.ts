@@ -1,13 +1,12 @@
 import e, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
-import { argv } from 'process';
 import { getEnvArgs } from './helpers/argv.helper.js';
 import { createServer } from 'http';
 import { Server, ServerOptions } from 'socket.io';
 import { initCounterNamespace } from './sockets/namespaces/counter.namespace.js';
 
-const { PORT, NODE_ENV, CLIENT_URL } = getEnvArgs(argv);
+const { PORT, NODE_ENV, CLIENT_URL } = getEnvArgs();
 
 const socketIoServerOptions: Partial<ServerOptions> = {
   cors:
@@ -33,7 +32,7 @@ if (NODE_ENV === 'dev') {
 
   console.log('Not serving static content in development mode.');
 } else if (NODE_ENV === 'prod') {
-  const clientDistPath = path.resolve(__dirname, '../../client/dist');
+  const clientDistPath = path.resolve(__dirname, 'client');
   app.use(e.static(clientDistPath));
 
   app.get(/.*/, (_: Request, res: Response) => {
