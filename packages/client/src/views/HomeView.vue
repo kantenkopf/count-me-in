@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import ENV from "@/env";
 import { Socket, io } from "socket.io-client";
 import { ref, onMounted, onUnmounted } from "vue";
 
-const socket: Socket = io("http://localhost:3000/counter"); // Replace with env variable
+const socket: Socket = io(ENV.SOCKET_URL_COUNTER); // Replace with env variable
 const counter = ref<number | null>(null);
 const isError = ref<boolean>(false);
 

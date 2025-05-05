@@ -5,8 +5,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "prod": "node dist/index.js NODE_ENV=prod PORT=3000",
-    "dev": "tsx watch ./src/**.* NODE_ENV=dev PORT=3000 CLIENT_URL=http://localhost:8080",
+    "prod": "cross-env NODE_ENV=prod PORT=3000 node dist/index.js",
+    "dev": "cross-env NODE_ENV=dev PORT=3000 CLIENT_URL=http://localhost:8080 tsx watch ./src/**.*",
     "test": "jest",
     "lint": "eslint . --ext .ts,.js",
     "clean": "rimraf -rf node_modules dist"
