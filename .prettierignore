@@ -1,9 +1,0 @@
-**/*.config.*
-**/babel.config.js
-**/vue.config.js
-**/.eslintrc
-**/.eslintrc.*
-**/.prettierrc
-**/.prettierignore
-**/.vscode/*
-**/.gitignore
