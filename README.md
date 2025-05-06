@@ -42,6 +42,13 @@ npm -v
 git --version
 ```
 
+**Important!**
+
+`cross-env` is used to set environment variables. If you do not want to install all project dependencies, you can install it globally:
+```bash
+npm install -g cross-env
+```
+
 ---
 
 ## 📂 Folder Structure
