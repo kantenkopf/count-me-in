@@ -185,6 +185,10 @@ While the current implementation meets the requirements, the following enhanceme
   ```bash
   npm run prod
   ```
+- **Run Production without building:**
+  ```bash
+  npm run prod:nobuild
+  ```
 
 ### 🏗️ Build
 - **Build All:**
