@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "concurrently --names \"CLIENT,SERVER\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run client:dev\" \"npm run server:dev\"",
-    "prod": "npm run build && npm run server:prod",
+    "prod": "npm run test && npm run build && npm run server:prod",
     "client:dev": "npm run serve --workspace=packages/client",
     "server:dev": "npm run dev --workspace=packages/server",
     "server:prod": "npm run prod --workspace=packages/server",
