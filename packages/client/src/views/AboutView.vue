@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <img src="../../assets/logo_alt.svg" />
+    <img src="@/assets/logo_alt.svg" />
     <h1>Solution to Siemens Energy Lab Code Challenge</h1>
     <p>
       Make sure to check out the

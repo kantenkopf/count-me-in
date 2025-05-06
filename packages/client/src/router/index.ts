@@ -23,6 +23,15 @@ const routes: Array<RouteRecordRaw> = [
       title: "Count Me In ++ About",
     },
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: () =>
+      import(/* webpackChunkName: "not-found" */ "../views/NotFoundView.vue"),
+    meta: {
+      title: "Page Not Found",
+    },
+  },
 ];
 
 const router = createRouter({

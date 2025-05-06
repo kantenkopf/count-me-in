@@ -148,6 +148,29 @@ button:active:not(:disabled) {
   color: var(--alt-secondary-color);
 }
 
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  gap: 2rem;
+}
+
+.not-found h1 {
+  color: var(--alt-color);
+}
+
+.not-found a {
+  color: var(--alt-color);
+}
+
+.not-found a:hover {
+  color: var(--alt-secondary-color);
+}
+
+
 .text-message {
   font-weight: bold;
   padding-bottom: 2rem;
