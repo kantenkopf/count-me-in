@@ -1,61 +1,69 @@
-process.env.TEST = 'enabled';
 process.env.NODE_ENV = 'prod';
+process.env.TEST = 'enabled';
 
+import path from 'path';
 import request from 'supertest';
 import app from '../src/index';
-import path from 'path';
 
-jest.mock('path', () => ({
-  ...jest.requireActual('path'),
-  resolve: jest.fn(() => '/mocked/client'),
-  join: jest.fn(() => '/mocked/client/index.html'),
-}));
+jest.mock('path', () => {
+  const originalPath = jest.requireActual('path');
+  return {
+    ...originalPath,
+    resolve: jest.fn((...args) => {
+      if (args.length > 1 && args[1] === 'client') {
+        return '/mock/dist/client';
+      }
+      return originalPath.resolve(...args);
+    }),
+    join: jest.fn((...args) => {
+       if (args.length > 1 && args[1] === 'index.html') {
+         return '/mock/dist/client/index.html';
+       }
+       return originalPath.join(...args);
+    }),
+  };
+});
+
+const originalConsoleError = console.error;
 
 describe('Server in Production Mode', () => {
+  let errorSpy: jest.SpyInstance;
+
+  it('should resolve the client dist path on startup', () => {
+    expect(path.resolve).toHaveBeenCalledWith(expect.any(String), 'client');
+  });
+
   beforeEach(() => {
-    process.env.NODE_ENV = 'prod';
+    (path.join as jest.Mock).mockClear();
+    if (errorSpy) {
+        errorSpy.mockClear();
+    } else {
+        errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    }
   });
 
-  it('should serve static content', async () => {
-    // Mock the behavior of `res.sendFile` at the route level
-    const mockSendFile = jest.fn((filePath, callback) => {
-      if (filePath === '/mocked/client/index.html') {
-        callback(null); // Simulate successful file serving
-      } else {
-        callback(new Error('File not found'));
-      }
-    });
-
-    app.use((req, res, next) => {
-      res.sendFile = mockSendFile; // Override `sendFile` for testing
-      next();
-    });
-
-    const response = await request(app).get('/');
-    expect(response.status).toBe(200);
-    expect(mockSendFile).toHaveBeenCalledWith(
-      '/mocked/client/index.html',
-      expect.any(Function)
-    );
+  afterAll(() => {
+    console.error = originalConsoleError;
+    jest.restoreAllMocks();
   });
 
-  it('should handle errors when serving index.html', async () => {
-    // Mock the behavior of `res.sendFile` to simulate an error
-    const mockSendFile = jest.fn((_, callback) => {
-      callback(new Error('Test Error')); // Simulate an error
-    });
+  it('should attempt to serve index.html for arbitrary routes and fail (mocked)', async () => {
+    const response = await request(app).get('/some/non-existent/route');
 
-    app.use((req, res, next) => {
-      res.sendFile = mockSendFile; // Override `sendFile` for testing
-      next();
-    });
+    expect(path.join).toHaveBeenCalledWith('/mock/dist/client', 'index.html');
 
-    const response = await request(app).get('/');
     expect(response.status).toBe(500);
     expect(response.text).toBe('Internal Server Error');
-    expect(mockSendFile).toHaveBeenCalledWith(
-      '/mocked/client/index.html',
-      expect.any(Function)
-    );
+    expect(errorSpy).toHaveBeenCalled();
+  });
+
+  it('should attempt static file serving and fallback for non-existent static file', async () => {
+    const response = await request(app).get('/main.js');
+
+    expect(path.join).toHaveBeenCalledWith('/mock/dist/client', 'index.html');
+
+    expect(response.status).toBe(500);
+    expect(response.text).toBe('Internal Server Error');
+    expect(errorSpy).toHaveBeenCalled();
   });
 });
