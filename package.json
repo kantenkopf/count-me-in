@@ -17,7 +17,7 @@
     "lint": "npm run lint:client && npm run lint:server",
     "lint:client": "npm run lint --workspace=packages/client",
     "lint:server": "npm run lint --workspace=packages/server",
-    "format": "eslint --fix \"packages/**/*.{ts,vue,js,json,css,scss}\"",
+    "format": "eslint --fix \"packages/**/*.{ts,vue,js,json}\"",
     "clean:all": "rimraf dist packages/*/node_modules node_modules",
     "clean:modules": "rimraf packages/*/node_modules node_modules",
     "clean:dist": "rimraf dist"
