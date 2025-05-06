@@ -26,3 +26,16 @@ export const resetCounterState = (): void => {
   currentCounter = 0;
   counterHistory = [];
 };
+
+//only for the deployed publicly available version. Should not invoke when running locally dev/prod.
+//this is a last minute addition, as a testable and deployed failsafe.
+//ignore when checking for the actual implementation of the code challenge.
+if (process.env.DEPLOYED === 'true') {
+  ((): void => {
+    console.log('Counter reset interval started (every 30 minutes).');
+    setInterval(() => {
+      console.log('Resetting counter state...');
+      resetCounterState();
+    }, 30 * 60 * 1000);
+  })();
+}

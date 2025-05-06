@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "prod": "cross-env NODE_ENV=prod PORT=3000 node ../../dist/index.js",
+    "prod:deploy": "cross-env NODE_ENV=prod PORT=3000 DEPLOYED=true node ../../dist/index.js",
     "dev": "cross-env NODE_ENV=dev PORT=3000 CLIENT_URL=http://localhost:8080 tsx watch ./src/**.*",
     "test": "jest",
     "lint": "eslint . --ext .ts,.js",

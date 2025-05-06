@@ -5,3 +5,4 @@ dist/*
 **/*.config.ts
 dist/*
 test/*
+packages/client/assets/*.css
