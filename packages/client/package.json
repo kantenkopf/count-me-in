@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "cross-env NODE_ENV=dev vue-cli-service serve",
-    "build": "cross-env NODE_ENV=prod vue-cli-service build",
-    "build:deploy": "cross-env NODE_ENV=deploy vue-cli-service build",
+    "build": "vue-cli-service build",
+    "build:deploy": "vue-cli-service build --mode deploy",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "clean": "rimraf -rf node_modules dist"

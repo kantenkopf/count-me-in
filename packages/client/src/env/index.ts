@@ -4,9 +4,9 @@ import { ENV_PROD } from "./env.prod";
 import { EnvConfig } from "@/types/env.types";
 
 const ENV: EnvConfig =
-  process.env.NODE_ENV === "prod"
+  process.env.NODE_ENV === "production"
     ? ENV_PROD
-    : process.env.NODE_ENV === "dev"
+    : process.env.NODE_ENV === "development"
     ? ENV_DEV
     : ENV_DEPLOY;
 
